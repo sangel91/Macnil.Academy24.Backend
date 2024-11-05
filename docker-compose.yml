@@ -1,0 +1,84 @@
+version: "3.9"
+services:
+  academy-backend:
+    image: academy-backend:0.0.1
+    container_name: academy-backend
+    build:
+      context: ./
+      target: dev
+    volumes:
+      - ./:/home/academy
+    networks:
+      - academy_net
+    tty: true
+    command: /bin/bash
+    ports:
+      - "8090:8090"
+    environment:
+      SPRING_APPLICATION_JSON: |-
+        {
+          "server":{
+            "port":"8090",
+            "error":{
+              "include-message":"always"
+            }
+          },
+          "spring":{
+            "datasource":{
+              "hikari":{
+                "connectionTimeout":"20000",
+                "maximumPoolSize":"5"
+              },
+              "url":"jdbc:postgresql://academy_postgres/postgres?createDatabaseIfNotExist",
+              "username":"root",
+              "password":"admin",
+              "driverClassName":"org.postgresql.Driver"
+            },
+            "jpa":{
+              "database-platform":"org.hibernate.dialect.PostgreSQL94Dialect",
+              "show-sql":" false",
+              "hibernate":{
+                "ddl-auto":"update"
+              },
+              "properties":{
+                "hibernate":{
+                  "format_sql":"true"
+                }
+              }
+            }
+          },
+          "macnil":{
+            "academy":{
+              "secret":"segretissimo",
+              "jwtExpirationMs":" 600000",
+              "jwtRefreshExpirationMs":" 3600000"
+            }
+          }
+        }
+  academy_postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "${POSTGRESQL_HOST_PORT}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - academy_net
+  academy_adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "${ADMINER_HOST_PORT}:8080"
+    networks:
+      - academy_net
+      
+networks:
+  academy_net:
+
+
+volumes:
+  db-data:
+    driver: local
