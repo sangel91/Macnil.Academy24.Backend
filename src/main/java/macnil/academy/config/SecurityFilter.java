@@ -12,7 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import macnil.academy.model.UserInfo;
+import macnil.academy.model.User;
 import macnil.academy.utils.JwtUtils;
 
 @Component

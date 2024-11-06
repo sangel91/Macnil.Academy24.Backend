@@ -16,7 +16,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import macnil.academy.model.UserInfo;
+import macnil.academy.model.User;
 
 @Service
 public class JwtUtils {
@@ -34,7 +34,7 @@ public class JwtUtils {
      * @param userInfo
      * @return A string representing the generated token.
      */
-    public String generateToken(UserInfo userInfo) {
+    public String generateToken(User userInfo) {
         Map<String, Object> claims = new HashMap<>();
         // claims.put("key", "value");
         return createToken(claims, userInfo);
@@ -46,7 +46,7 @@ public class JwtUtils {
      * @param userInfo
      * @return A true or false result representing the outcome of the validation.
      */
-    public boolean validateToken(String token, UserInfo userInfo) {
+    public boolean validateToken(String token, User userInfo) {
         final String customerId = extractCustomerId(token);
         return (customerId.equals(String.valueOf(userInfo.getId())) && !isTokenExpired(token));
     }
@@ -98,7 +98,7 @@ public class JwtUtils {
         return (new Date()).after(expDate);
     }
     
-    private String createToken(Map<String, Object> claims, UserInfo userInfo) {
+    private String createToken(Map<String, Object> claims, User userInfo) {
         return Jwts.builder().setClaims(claims).setSubject(String.valueOf(userInfo.getId())).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs)) 
                 .signWith(SignatureAlgorithm.HS512, SECRET).compact();
