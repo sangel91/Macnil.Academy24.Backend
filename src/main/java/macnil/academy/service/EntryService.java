@@ -7,14 +7,15 @@ import org.springframework.stereotype.Service;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 public class EntryService {
 
     @Autowired
     private EntryRepository entryRepository;
-
-
+ 
     public EntryModel saveEntry(EntryModel entry) {
 
         if (entry.getHourIn() != null && entry.getHourOut() != null) {
@@ -43,4 +44,20 @@ public class EntryService {
     public List<EntryModel> getAllEntries() {
         return entryRepository.findAll();
     }
+
+    public Optional<EntryModel> getEntryById(Long id) {
+        return entryRepository.findById(id);
+    }
+
+    public EntryModel updateEntry(Long id, EntryModel updatedEntry) {
+        return entryRepository.findById(id).map(entry -> {
+            entry.setHourIn(updatedEntry.getHourIn());
+            entry.setHourOut(updatedEntry.getHourOut());
+            entry.setLocation(updatedEntry.getLocation());
+            entry.setStatus(updatedEntry.getStatus());
+            return entryRepository.save(entry);
+        }).orElse(null);
+   
+    }
 }
+

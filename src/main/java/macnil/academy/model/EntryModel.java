@@ -26,10 +26,8 @@ public class EntryModel {
     @Column(name="location", nullable= true)
     private String location;
     private int durataMinuti;
-    private String Status;
+    private String status;
     private String Colore;
-    public EntryModel() {
-    }
     public EntryModel(Long id, Date date, LocalDateTime hourIn, LocalDateTime hourOut, String location,
             int durataMinuti, String status, String colore) {
         this.id = id;
@@ -38,7 +36,10 @@ public class EntryModel {
         this.hourOut = hourOut;
         this.location = location;
         this.durataMinuti = durataMinuti;
-        Status = status;
+        this.status = status;
         Colore = colore;
     }
+  
+    
+    
 }
