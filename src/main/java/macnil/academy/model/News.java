@@ -30,7 +30,6 @@ public class News {
     @Setter
     private Long id;
 
-   
     @Getter
     @Setter
     @NotEmpty
@@ -45,7 +44,6 @@ public class News {
     @Setter
     private Date publish_date;
 
-   
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;

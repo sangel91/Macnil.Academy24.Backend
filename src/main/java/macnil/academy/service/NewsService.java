@@ -24,7 +24,7 @@ public class NewsService {
 
        public List<News> readAll(Integer numero) {
         List<News> news = newsRepository.findAll();
-            if(numero==null || numero<1)
+        if(numero==null || numero<1)
             return news;
         else {
             return news.stream().limit(numero).collect(Collectors.toList());
