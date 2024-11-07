@@ -1,7 +1,5 @@
 package macnil.academy.mapper;
-
 import java.util.Date;
-
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
