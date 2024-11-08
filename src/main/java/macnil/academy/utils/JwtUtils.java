@@ -15,7 +15,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import macnil.academy.model.UserInfo;
+import macnil.academy.model.User;
 
 @Service
 public class JwtUtils {
@@ -30,24 +30,24 @@ public class JwtUtils {
 
     /**
      * Generates a token by using the user info. 
-     * @param userInfo
+     * @param user
      * @return A string representing the generated token.
      */
-    public String generateToken(UserInfo userInfo) {
+    public String generateToken(User user) {
         Map<String, Object> claims = new HashMap<>();
         // claims.put("key", "value");
-        return createToken(claims, userInfo);
+        return createToken (claims, user);
     }
 
     /**
      * Validates a token by comparing it with the user info
      * @param token
-     * @param userInfo
+     * @param user
      * @return A true or false result representing the outcome of the validation.
      */
-    public boolean validateToken(String token, UserInfo userInfo) {
-        final String customerId = extractCustomerId(token);
-        return (customerId.equals(String.valueOf(userInfo.getId())) && !isTokenExpired(token));
+    public boolean validateToken(String token, User user) {
+        final String userId = extractUserId(token);
+        return (userId.equals(String.valueOf(user.getId())) && !isTokenExpired(token));
     }
 
     /**
@@ -55,15 +55,15 @@ public class JwtUtils {
      * @param token
      * @return A string representing the identifier of the customer.
      */
-    public String extractCustomerId(String token) {
-        String customerId = null;
+    public String extractUserId(String token) {
+        String userId = null;
         try {
-            customerId = extractClaim(token, Claims::getSubject);
+            userId = extractClaim(token, Claims::getSubject);
         }
         catch(ExpiredJwtException e) {
             logger.warn("Token expired or not valid!", e);
         }
-        return customerId;
+        return userId;
     }
 
     /**
@@ -97,11 +97,13 @@ public class JwtUtils {
         return (new Date()).after(expDate);
     }
     
-    private String createToken(Map<String, Object> claims, UserInfo userInfo) {
-        return Jwts.builder().setClaims(claims).setSubject(String.valueOf(userInfo.getId())).setIssuedAt(new Date(System.currentTimeMillis()))
+    private String createToken(Map<String, Object> claims, User user) {
+        return Jwts.builder().setClaims(claims).setSubject(String.valueOf(user.getEmail())).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs)) 
                 .signWith(SignatureAlgorithm.HS512, SECRET).compact();
     }
     // endregion PRIVATE_METHODS
+
+    
 }
 
