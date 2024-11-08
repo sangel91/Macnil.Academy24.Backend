@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -26,14 +27,7 @@ public class NewsRestController {
     NewsService newsService;
 
 
-    @GetMapping
-    public List <News> readAll(Integer numero){
-
-        List <News> news = newsService.readAll(numero);
-
-        return news;
-
-    }
+   
 
     @GetMapping ("value = /{newsId}")
     public News read(@PathVariable ("id") Long id){
@@ -42,7 +36,15 @@ public class NewsRestController {
     }
 
 
-    }
-
     
 
+    @GetMapping
+    public  List <News> readAll1( Integer numero,@RequestParam( name="tenantId")  Long tenantId ){  //@RequestBody    required = false,
+      
+        List <News> news = newsService.readAll1(numero, tenantId);
+
+        return news;
+
+    }
+
+}
