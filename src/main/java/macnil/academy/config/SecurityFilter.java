@@ -31,22 +31,21 @@ public class SecurityFilter extends OncePerRequestFilter {
         String token = null;
         String customerId = null;
 
-        if(authorizationHeader!=null && authorizationHeader.startsWith("Bearer ")) {
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             token = authorizationHeader.substring(7);
             customerId = jwtUtils.extractCustomerId(token);
         }
 
-        if(customerId != null && SecurityContextHolder.getContext().getAuthentication() ==null) {
-/*             UserInfo userInfo = (UserInfo) userInfoService.loadUserByCustomerId(Long.valueOf(customerId));
-            if(jwtUtils.validateToken(token, userInfo)) {
-                User user = new User(userInfo.getUsername(), userInfo.getPassword(), new ArrayList<>());
-                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userInfo, null, user.getAuthorities());
-                usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            } */
+        if (customerId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            // UserInfo userInfo = (UserInfo) userInfoService.loadUserByCustomerId(Long.valueOf(customerId));
+            // if (jwtUtils.validateToken(token, userInfo)) {
+            //     User user = new User(userInfo.getUsername(), userInfo.getPassword(), new ArrayList<>());
+            //     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userInfo, null, user.getAuthorities());
+            //     usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            //     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            // }
         }
-        
-        filterChain.doFilter(request, response);                
+
+        filterChain.doFilter(request, response);
     }
-        
 }

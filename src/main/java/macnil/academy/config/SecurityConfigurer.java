@@ -58,7 +58,7 @@ public class SecurityConfigurer {
                     .exceptionHandling().accessDeniedHandler(accessDeniedHandler()).and()
                     .sessionManagement()
                     .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-            //http.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+            // http.addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
         }
 
          @Bean
