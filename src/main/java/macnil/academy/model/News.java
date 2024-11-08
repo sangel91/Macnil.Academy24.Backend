@@ -48,5 +48,25 @@ public class News {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
+    }
+
+    @ManyToOne
+    @JoinColumn( name = "tenant_id")
+    private Tenant tenant;
+
 
 }
