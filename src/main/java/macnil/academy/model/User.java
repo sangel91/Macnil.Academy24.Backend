@@ -1,17 +1,28 @@
 package macnil.academy.model;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import net.bytebuddy.asm.Advice.Return;
+
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,8 +32,9 @@ public class User {
     private String city;
     @Column(name = "email", nullable = false, unique = true)
     private String email;
-    @Column(name = "role", nullable = false, unique = true)
-    private String role;
+     @Enumerated(EnumType.STRING)
+    @Column(name = "role", nullable = false)
+    private Role role;
     @Column(name = "password", nullable = false)
     private String password;
     @Column(name= "generatedCode")
@@ -34,6 +46,11 @@ public class User {
     @Column(name = "workingTime", nullable= false)
     private String workingTime;
     public User() {
+    }
+    public User(String firstname, Role role, String password) {
+        this.firstname = firstname;
+        this.role = role;
+        this.password = password;
     }
     public Long getId() {
         return id;
@@ -59,12 +76,7 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
-    public String getRole() {
-        return role;
-    }
-    public void setRole(String role) {
-        this.role = role;
-    }
+    
     public String getPassword() {
         return password;
     }
@@ -95,7 +107,44 @@ public class User {
     public void setWorkingTime(String workingTime) {
         this.workingTime = workingTime;
     }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+        return authorities;
+    }
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isEnabled() {
+       return true;
+    }
+    public enum Role {
+        USER,
+        ADMIN
+    }
+    public Role getRole() {
+        return role;
+    }
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
+    
 
 
 }
