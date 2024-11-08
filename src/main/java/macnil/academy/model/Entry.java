@@ -1,7 +1,8 @@
 package macnil.academy.model;
 
-import java.sql.Date;
-import java.sql.Time;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,15 +24,13 @@ public class Entry {
     private Long Id;
 
     @Column(name = "date")
-    private Date date;
-
-
-    @Column(name = "hourIn")
-    private Time hourIn;
-
+    private LocalDate date;
     
-    @Column(name = "hourOut")
-    private Time hourOut;
+    @Column(name = "hour_in")
+    private LocalTime hour_in;
+
+    @Column(name = "hour_out")
+    private LocalTime hour_out;
 
     @Lob // Questo campo conterrà testo lungo
     @Column(name= "notes")
@@ -40,9 +39,10 @@ public class Entry {
     @Column(name = "location")
     private String location;
 
+    
     @ManyToOne
-    @JoinColumn(name = "userId")
-    private User user;
+    @JoinColumn(name = "user_id")
+    private User user_id;
 
 
     public Entry(){
@@ -60,33 +60,33 @@ public class Entry {
     }
 
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
 
-    public Time getHourIn() {
-        return hourIn;
+    public LocalTime getHour_in() {
+        return hour_in;
     }
 
 
-    public void setHourIn(Time hourIn) {
-        this.hourIn = hourIn;
+    public void setHour_in(LocalTime hour_in) {
+        this.hour_in = hour_in;
     }
 
 
-    public Time getHourOut() {
-        return hourOut;
+    public LocalTime getHour_out() {
+        return hour_out;
     }
 
 
-    public void setHourOut(Time hourOut) {
-        this.hourOut = hourOut;
+    public void setHour_out(LocalTime hour_out) {
+        this.hour_out = hour_out;
     }
 
 
@@ -110,14 +110,17 @@ public class Entry {
     }
 
 
-    public User getUser() {
-        return user;
+    public User getUser_id() {
+        return user_id;
     }
 
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser_id(User user_id) {
+        this.user_id = user_id;
     }
+
+
+
 
     
 

@@ -109,8 +109,17 @@
       		<artifactId>passay</artifactId>
       		<version>1.6.1</version>
   		</dependency>
-
-	</dependencies>
+		<dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>3.2.0</version>    
+        </dependency>
+   <dependency>
+     <groupId>io.quarkus</groupId>
+     <artifactId>quarkus-spring-data-commons-api</artifactId>
+     <version>3.2.SP2</version>
+   </dependency>
+ </dependencies>
 
 	<build>
 		<plugins>
