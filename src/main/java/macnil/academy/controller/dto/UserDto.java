@@ -2,6 +2,8 @@ package macnil.academy.controller.dto;
 
 import java.time.LocalDate;
 
+import macnil.academy.model.Tenant;
+
 public class UserDto {
     private Long id; 
     private String firstname; 
@@ -13,6 +15,7 @@ public class UserDto {
     private LocalDate dateGeneratedCode; 
     private LocalDate created_at; 
     private String workingTime;
+    private Tenant tenant; 
     
 
     /*costruttore */
@@ -117,6 +120,16 @@ public class UserDto {
 
     public void setWorkingTime(String workingTime) {
         this.workingTime = workingTime;
+    }
+
+
+    public Tenant getTenant() {
+        return tenant;
+    }
+
+
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
     } 
 
     

@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -34,6 +36,12 @@ public class User {
     private LocalDate created_at;
     @Column(name = "workingTime", nullable= false)
     private String workingTime;
+
+    @ManyToOne
+    @JoinColumn(name = "tenant_id")
+    private Tenant tenant;
+
+
 
     
 
@@ -102,6 +110,16 @@ public class User {
     public void setWorkingTime(String workingTime) {
         this.workingTime = workingTime;
     }
+    public Tenant getTenant() {
+        return tenant;
+    }
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
+    }
+
+    
+   
+    
 
 
 

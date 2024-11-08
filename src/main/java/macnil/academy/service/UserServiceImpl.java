@@ -3,6 +3,7 @@ package macnil.academy.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +86,24 @@ public class UserServiceImpl implements UserService{
         dtos.add(mapper.map(user, UserDto.class));
     }
     return dtos ;
+}
+
+public List<User> readAll1(Integer numero, Long tenantId){
+    List <User> user; 
+
+    if (tenantId != null){
+        user = userRepository.findByTenantId(tenantId);
+    } else {
+        user = userRepository.findAll(); 
+    }
+
+    if (numero == null || numero < 1)
+        return user; 
+    else {
+        return user.stream().limit(numero).collect(Collectors.toList()); 
+    }
+
+
 }
 
     

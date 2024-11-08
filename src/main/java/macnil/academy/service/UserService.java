@@ -18,5 +18,7 @@ public interface UserService {
     /*lista degli user con firstname e city */
     List<UserDto> read(String firstname, String city); 
 
+    List<User> readAll1(Integer numero, Long tenantId);
+
     
 }

@@ -10,6 +10,7 @@ import macnil.academy.model.User;
 public interface UserRepository extends JpaRepository<User, Long> {
     List<User> findByEmail(String email); 
     List<User>findByFirstnameAndCity(String firstname, String city); 
+    List<User>findByTenantId(Long tenantId); 
 
     
     
