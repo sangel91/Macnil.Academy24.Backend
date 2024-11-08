@@ -120,6 +120,12 @@ public class Entry {
     }
 
 
+    public Object getHour() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getHour'");
+    }
+
+
 
 
     

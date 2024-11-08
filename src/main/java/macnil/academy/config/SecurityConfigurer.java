@@ -32,7 +32,7 @@ public class SecurityConfigurer {
      *       Even better use DelegatingPasswordEncoder which supports password
      *       upgrades
      */
-    @Bean
+    @Bean   
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();
     }
