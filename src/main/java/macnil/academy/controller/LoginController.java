@@ -36,18 +36,6 @@ public class LoginController {
     @Autowired
     private AuthenticationService autenticationService;
     
-    
-    
-    
-    @GetMapping("/user/{email}")
-    public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
-        try{
-            User user = userService.getUserByEmail(email);
-            return ResponseEntity.ok(user);
-        }catch (ResponseStatusException e){
-            return ResponseEntity.status(e.getStatus()).body(null);
-        }
-    }
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDto> login(@RequestBody LoginRequestDto loginRequestDto){
        
