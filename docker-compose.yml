@@ -74,7 +74,7 @@ services:
       - "${ADMINER_HOST_PORT}:8080"
     networks:
       - academy_net
-      
+
 networks:
   academy_net:
 
