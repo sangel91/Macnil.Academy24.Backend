@@ -1,6 +1,5 @@
 package macnil.academy.repository;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +11,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findById(Long id);
     Optional<User> findByFirstname(String firstname);  
     Optional<User> findByEmail(String email);
+
     Optional<User> findByPassword(String password);
+
     List<User> findByRole(User.Role role);
-    
+
 }
-
-
