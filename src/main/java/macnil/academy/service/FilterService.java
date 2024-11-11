@@ -1,4 +1,9 @@
 package macnil.academy.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import macnil.academy.controller.FilterRestController;
 import macnil.academy.model.ResponseEntry;
 import macnil.academy.repository.EntryRepository;
 
@@ -6,18 +11,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-// import org.modelmapper.ModelMapper;
-
 @Service
-public class EntryServiceImpl {
+public class FilterService {
+
     @Autowired
     EntryRepository entryRepository;
 
-    public List<ResponseEntry> getEntryResult() {
+    public List<ResponseEntry> getFilterResult(Long user_id, int month) {
 
-        List<Object[]> results = entryRepository.entryByMonth();
+        List<Object[]> results = entryRepository.entryByMonth(user_id, month);
         List<ResponseEntry> responseEntries = new ArrayList<>();
 
         for (Object[] row : results) {
@@ -36,5 +38,6 @@ public class EntryServiceImpl {
 
         return responseEntries;
     }
-    
 }
+
+

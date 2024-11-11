@@ -41,11 +41,4 @@ public class ResponseEntry {
     public void setWorkTimeMinutes(BigDecimal workTimeMinutes) {
         this.workTimeMinutes = workTimeMinutes;
     }
-
-   
-
-    
-
-    
-    
 }
