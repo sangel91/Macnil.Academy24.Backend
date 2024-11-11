@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/v1/entry")
+@RequestMapping("api/v1/gitentry")
 public class EntryController {
 
     @Autowired
