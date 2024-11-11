@@ -12,6 +12,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -143,7 +145,15 @@ public class User implements UserDetails {
     public void setRole(Role role) {
         this.role = role;
     }
-
+    @ManyToOne
+    @JoinColumn(name = "tenant_id")  
+    private Tenant tenant;
+    public Tenant getTenant() {
+        return tenant;
+    }
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
+    }
     
 
 

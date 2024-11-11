@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 import ch.qos.logback.core.recovery.ResilientFileOutputStream;
 import macnil.academy.controller.dto.LoginRequestDto;
 import macnil.academy.controller.dto.LoginResponseDto;
+import macnil.academy.model.Tenant;
 import macnil.academy.model.User;
 import macnil.academy.repository.UserRepository;
 import macnil.academy.utils.JwtUtils;
@@ -37,11 +38,17 @@ public class AuthenticationService {
            if (!passwordEncoder.matches(plainPassword , encryptedPassword)) {
             throw new RuntimeException("Invalid credentials");
         }
+        Long id = user.getId();
+        Long tenantId = user.getTenant().getId();
+        String firstname = user.getFirstname();
         String role = user.getRole().name();
         String token = jwtUtils.generateToken(user);
         LoginResponseDto loginResponse = new LoginResponseDto();
         loginResponse.setToken(token);
         loginResponse.setRole(role);
+        loginResponse.setFirstname(firstname);
+        loginResponse.setId(id);
+        loginResponse.setTenantId(tenantId);
         return loginResponse; 
          
     }

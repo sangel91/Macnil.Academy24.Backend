@@ -35,7 +35,7 @@ public class SecurityConfigurer{
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/api/auth/login").permitAll()  // Permetti l'accesso alla rotta di login
+            .antMatchers("/api/auth/login", "/api/v1/**").permitAll()  // Permetti l'accesso alla rotta di login
             .anyRequest().authenticated()
             .and()
             .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class); 

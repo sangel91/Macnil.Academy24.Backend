@@ -46,12 +46,13 @@ public class SecurityFilter extends OncePerRequestFilter {
             token = authorizationHeader.substring(7);
             email = jwtUtils.extractUserId(token);
         }
-
+            // verificato se l'email esiste (quindi, se il token è valido e contiene l'email) 
         if(email != null && SecurityContextHolder.getContext().getAuthentication() ==null) {
             User user = userService.getUserByEmail(email);
              
             if (user != null && jwtUtils.validateToken(token, user)) {
                 // Se l'utente è valido e il token è valido, crea un token di autenticazione
+                //Oggetto che rappresenta l'utente autenticato
                 UsernamePasswordAuthenticationToken authenticationToken =
                     new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
