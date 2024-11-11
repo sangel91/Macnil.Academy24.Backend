@@ -1,7 +1,5 @@
 package macnil.academy.service;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,20 +9,23 @@ import macnil.academy.repository.EntryRepository;
 
 @Service
 public class EntryServiceImpl implements EntryService {
-      
-      @Autowired
+
+    @Autowired
     private EntryRepository entryRepository;
 
     @Override
-    public EntryDto create(Entry entry) {
-        // Salva la nuova entry nel DB
-        Entry savedEntry = entryRepository.save(entry);  
+    public Entry create(EntryDto entryDto) {
+        // Creiamo un nuovo oggetto Entry basato sul DTO
+        Entry entry = new Entry(
+            entryDto.getDate(),            // LocalDate
+            entryDto.getHour_in(),        // LocalTime
+            entryDto.getHour_out(),       // LocalTime
+            entryDto.getNotes(),          // String
+            entryDto.getLocation(),       // String
+            null                          // User sarà gestito in un altro momento (ad esempio tramite autenticazione)
+        );
 
-        // Mappatura manuale da Entry a EntryDto
-        EntryDto entryDto = new EntryDto();
-        entryDto.setId(savedEntry.getId());  // Esegui la mappatura manuale
-
-        return entryDto;
+        // Salviamo l'entry nel database e lo restituiamo
+        return entryRepository.save(entry);
     }
-    
 }

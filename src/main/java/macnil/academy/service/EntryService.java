@@ -7,9 +7,8 @@ import macnil.academy.model.Entry;
 
 public interface EntryService {
 
-    EntryDto create(Entry entry);
+    Entry create(EntryDto entryDto);
 
     
 } 
     
-
