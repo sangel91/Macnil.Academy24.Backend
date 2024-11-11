@@ -29,11 +29,10 @@ public class UserRestController {
     UserService userService;
 
     @GetMapping("tenant/{tenantId}/users")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public @ResponseBody List<UserDto> getAllUsers(@PathVariable Long tenantId) {
+        public @ResponseBody List<UserDto> getAllUsers(@PathVariable Long tenantId) {
         // 1. Verifica se il tenantId è nullo
         if (tenantId == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Il tenanId non può essere nullo");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Il tenantId non può essere nullo");
 
         }
         // 2. Verifica se il tenantId esiste nel database, ad esempio controllando se
@@ -49,10 +48,28 @@ public class UserRestController {
         }
         // Converti gli utenti in UserDto e restituisci la lista
         List<UserDto> userDtos = users.stream()
-                .map(user -> new UserDto())
-                .collect(Collectors.toList());
-        return userDtos;
-    }
+               .map(user -> {
+                // Crea un nuovo UserDto e mappa i dati dall'oggetto User
+                UserDto userDto = new UserDto();
+                userDto.setId(user.getId());              // Imposta l'ID dell'utente
+                userDto.setFirstname(user.getFirstname());  // Imposta lo username
+                userDto.setCity(user.getCity());
+                userDto.setEmail(user.getEmail());        // Imposta l'email
+                userDto.setRole(user.getRole()); 
+                userDto.setPassword(user.getPassword()); 
+                userDto.setGeneratedCode(user.getGeneratedCode()); 
+                userDto.setDateGeneratedCode(user.getDateGeneratedCode()); 
+                userDto.setCreated_at(user.getCreated_at()); 
+                userDto.setWorkingTime(user.getWorkingTime()); 
+                userDto.setTenant(user.getTenant()); 
+
+
+                return userDto;
+            })
+            .collect(Collectors.toList());
+ 
+     return userDtos;
+ }
 
     @GetMapping("{id}/users")
     public @ResponseBody UserDto getUser(@PathVariable("id") Long id) {
