@@ -1,5 +1,7 @@
 package macnil.academy.EmailVerification;
-
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import macnil.academy.model.User;
 import macnil.academy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import java.time.temporal.ChronoUnit;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:3000")
 public class VerificationController {
 
     @Autowired

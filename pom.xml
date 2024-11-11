@@ -17,6 +17,8 @@
 		<java.version>11</java.version>
 		<org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
 	</properties>
+
+
 	<dependencies>
 
 		<dependency>
@@ -29,7 +31,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<dependencies>
     <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-web</artifactId>
@@ -43,8 +44,7 @@
         <artifactId>spring-boot-starter-test</artifactId>
         <scope>test</scope>
     </dependency>
-</dependencies>
-	<dependencies>
+
     <!-- Spring Boot Starter Web -->
     <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -70,7 +70,7 @@
         <artifactId>spring-boot-starter-test</artifactId>
         <scope>test</scope>
     </dependency>
-</dependencies>
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -168,6 +168,8 @@
       		<version>1.6.1</version>
   		</dependency>
 		
+    
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
