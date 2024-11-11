@@ -19,7 +19,7 @@ import macnil.academy.repository.UserRepository;
 import macnil.academy.service.UserService;
 
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1")
 
 public class UserRestController {
     @Autowired
@@ -28,7 +28,7 @@ public class UserRestController {
     @Autowired
     UserService userService;
 
-    @GetMapping("tenant/{tenantId}")
+    @GetMapping("tenant/{tenantId}/users")
     @PreAuthorize("hasRole('ROLE_USER')")
     public @ResponseBody List<UserDto> getAllUsers(@PathVariable Long tenantId) {
         // 1. Verifica se il tenantId è nullo
@@ -54,7 +54,7 @@ public class UserRestController {
         return userDtos;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("{id}/users")
     public @ResponseBody UserDto getUser(@PathVariable("id") Long id) {
         // return userRepository.findById(id).get();
         return userService.read(id);

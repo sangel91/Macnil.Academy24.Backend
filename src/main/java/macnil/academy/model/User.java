@@ -12,8 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity  //classe che mappa una tabella nel database
-@Table(name = "users")  //nome della tabella
+@Entity  
+@Table(name = "users")  
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
