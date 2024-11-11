@@ -1,11 +1,9 @@
 package macnil.academy.service;
-
 import macnil.academy.controller.dto.EntryDTO;
 import macnil.academy.model.EntryModel;
 import macnil.academy.repository.EntryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
@@ -17,13 +15,13 @@ public class EntryService {
     private EntryRepository entryRepository;
 
     public EntryDTO saveEntry(EntryDTO entryDTO) {
-        // Mappa EntryDTO a EntryModel
+      
         EntryModel entry = toModel(entryDTO);
 
-        // Calcola durata, status, e colore
+       
         setDurataStatusColore(entry);
 
-        // Salva l'EntryModel e restituisci il DTO
+       
         EntryModel savedEntry = entryRepository.save(entry);
         return toDTO(savedEntry);
     }
@@ -42,7 +40,6 @@ public class EntryService {
             entry.setHourOut(updatedEntry.getHourOut());
             entry.setLocation(updatedEntry.getLocation());
 
-            // Ricalcola durata, status e colore
             setDurataStatusColore(entry);
 
             return entryRepository.save(entry);
@@ -52,12 +49,12 @@ public class EntryService {
     private void setDurataStatusColore(EntryModel entry) {
         if (entry.getHourIn() != null && entry.getHourOut() != null) {
             long durataMinuti = Duration.between(entry.getHourIn(), entry.getHourOut()).toMinutes();
-            entry.setDurataMinuti((int) Math.min(durataMinuti, 480)); // Limita a massimo 480 minuti
+            entry.setDurataMinuti((int) Math.min(durataMinuti, 480)); 
         } else {
-            entry.setDurataMinuti(0); // Imposta a 0 se manca hourIn o hourOut
+            entry.setDurataMinuti(0); 
         }
 
-        // Imposta lo status e il colore in base alla durata
+ 
         if (entry.getDurataMinuti() < 240) {
             entry.setStatus("Incompleto");
             entry.setColore("Rosso");
