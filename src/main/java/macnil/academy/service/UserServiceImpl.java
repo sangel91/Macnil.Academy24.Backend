@@ -3,6 +3,7 @@ package macnil.academy.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import macnil.academy.controller.dto.UserDto;
 import macnil.academy.model.User;
 import macnil.academy.repository.UserRepository;
 
-//@Component("UserService")
+
 @Service
 
 public class UserServiceImpl implements UserService{
@@ -28,7 +29,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDto> readAll() {
-        // return userRepository.findAll();
+        
         List<UserDto> dtos = new ArrayList<UserDto>();
         for(User user: userRepository.findAll()){
             dtos.add(mapper.map(user,UserDto.class));
@@ -39,16 +40,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto read(Long id) {
-     //    Optional<User> optUser = userRepository.findById(id);
-    //    if (optUser.isPresent()) {
-    //         return optUser.get();
-    //    }else{
-    //     throw new ResponseStatusException(
-    //         HttpStatus.NOT_FOUND,
-    //         "User con id: " + id + "non trovato"
-    //     );
-    //    }
-    // }
+
 
         Optional<User> optUser = userRepository.findById(id); 
         if (optUser.isPresent()) {
@@ -59,14 +51,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<UserDto> read(String email) {
-    //     if(email == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-    //    return authorRepository.findByEmail(email);
-    // }
+    public List<UserDto> read(String firstname) {
+    
 
-        if(email == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST); 
+        if(firstname == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST); 
         List<UserDto> dtos = new ArrayList<UserDto>(); 
-        for(User user: userRepository.findByEmail(email)){
+        for(User user: userRepository.findByFirstname(firstname)){
             dtos.add(mapper.map(user, UserDto.class));
         }
         return dtos;
@@ -74,9 +64,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<UserDto> read(String firstname, String city) {
-    // if(firstname == null || lastname== null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-    //     return authorRepository.findByFirstnameAndLastname(firstname, lastname);
-    // }
+   
 
     if (firstname == null || city == null)
     throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
@@ -87,5 +75,20 @@ public class UserServiceImpl implements UserService{
     return dtos ;
 }
 
+public List<User> readAll(Long tenantId){
+    List <User> user; 
+
+    if (tenantId != null){
+        user = userRepository.findByTenantId(tenantId);
+    } else {
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "USER NONPRESENTE");
+    }
+    return user;
+
     
+
+
+}
+
+
 }

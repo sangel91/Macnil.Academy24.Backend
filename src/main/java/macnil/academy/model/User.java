@@ -1,17 +1,19 @@
 package macnil.academy.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "users")
+@Entity  //classe che mappa una tabella nel database
+@Table(name = "users")  //nome della tabella
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,6 +36,12 @@ public class User {
     private LocalDate created_at;
     @Column(name = "workingTime", nullable= false)
     private String workingTime;
+
+    @ManyToOne  //iene utilizzata per definire una relazione molti-a-uno tra due entità
+    @JoinColumn(name = "tenant_id") //specificare la colonna che gestisce la relazione tra le due entità
+    private Tenant tenant;
+
+
 
     
 
@@ -102,6 +110,16 @@ public class User {
     public void setWorkingTime(String workingTime) {
         this.workingTime = workingTime;
     }
+    public Tenant getTenant() {
+        return tenant;
+    }
+    public void setTenant(Tenant tenant) {
+        this.tenant = tenant;
+    }
+
+    
+   
+    
 
 
 
