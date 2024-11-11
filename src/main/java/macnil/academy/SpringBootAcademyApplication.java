@@ -10,8 +10,5 @@ public class SpringBootAcademyApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootAcademyApplication.class, args);
 
-		
 	}
-
-
 }

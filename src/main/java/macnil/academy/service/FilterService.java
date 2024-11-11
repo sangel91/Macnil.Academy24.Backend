@@ -3,7 +3,6 @@ package macnil.academy.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import macnil.academy.controller.FilterRestController;
 import macnil.academy.model.ResponseEntry;
 import macnil.academy.repository.EntryRepository;
 
@@ -23,13 +22,13 @@ public class FilterService {
         List<ResponseEntry> responseEntries = new ArrayList<>();
 
         for (Object[] row : results) {
-            Long id = ((Number) row[0]).longValue();  // id
-            java.sql.Date sqlDate = (java.sql.Date) row[1];  // Recupera la data come java.sql.Date
+            Long id = ((Number) row[0]).longValue();  
+            java.sql.Date sqlDate = (java.sql.Date) row[1];  
         
             // Converte java.sql.Date in java.time.LocalDate
-            LocalDate date = sqlDate.toLocalDate();  // Conversione esplicita
+            LocalDate date = sqlDate.toLocalDate();  
 
-            BigDecimal workTimeMinutes = (BigDecimal) row[2];  // Recupera il valore come BigDecimal
+            BigDecimal workTimeMinutes = (BigDecimal) row[2];  
 
 
             ResponseEntry responseEntry = new ResponseEntry(id, date, workTimeMinutes);
