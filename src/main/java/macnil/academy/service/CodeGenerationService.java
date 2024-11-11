@@ -1,8 +1,8 @@
-package macnil.academy.EmailVerification;
-
-import org.springframework.stereotype.Service;
+package macnil.academy.service;
 
 import java.util.Random;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class CodeGenerationService {

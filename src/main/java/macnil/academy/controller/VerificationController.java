@@ -1,27 +1,29 @@
-package macnil.academy.EmailVerification;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import macnil.academy.model.User;
-import macnil.academy.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+package macnil.academy.controller;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import macnil.academy.model.User;
+import macnil.academy.repository.UserRepository;
+import macnil.academy.service.CodeGenerationService;
+
 @RestController
 @RequestMapping("/api/v1")
-@CrossOrigin(origins = "http://localhost:3000")
 public class VerificationController {
 
     @Autowired
     private CodeGenerationService codeGenerationService;
 
     @Autowired
-    private UserRepository userRepository;  // Usa il repository User
+    private UserRepository userRepository; // Usa il repository User
 
     /**
      * Endpoint per richiedere un codice di recupero.
@@ -44,12 +46,10 @@ public class VerificationController {
 
         // Calcola la data di generazione del codice
         user.setGeneratedCode(recoveryCode);
-        user.setDateGeneratedCode(LocalDateTime.now());  // Memorizza anche l'ora di generazione
+        user.setDateGeneratedCode(LocalDateTime.now()); // Memorizza anche l'ora di generazione
 
         // Salva nel database
         userRepository.save(user);
-
-       
 
         // Risposta di successo
         return ResponseEntity.ok("Recovery code sent to: " + email);
@@ -61,8 +61,8 @@ public class VerificationController {
      * E.g., /api/v1/login-with-recovery-code?email=example@example.com&code=123456
      */
     @PostMapping("/login-with-recovery-code")
-    public ResponseEntity<String> loginWithRecoveryCode(@RequestParam("email") String email, 
-                                                        @RequestParam("code") String code) {
+    public ResponseEntity<String> loginWithRecoveryCode(@RequestParam("email") String email,
+            @RequestParam("code") String code) {
 
         // Recupera l'utente dal database
         User user = userRepository.findByEmail(email);
@@ -83,12 +83,13 @@ public class VerificationController {
         }
 
         // Verifica se il codice è scaduto (più di 10 minuti)
-        LocalDateTime codeGeneratedAt = user.getDateGeneratedCode();  // Ottieni la data di generazione del codice
+        LocalDateTime codeGeneratedAt = user.getDateGeneratedCode(); // Ottieni la data di generazione del codice
         if (codeGeneratedAt == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Code generation date is missing");
         }
 
-        // Calcoliamo la differenza in minuti tra la data corrente e quella di generazione del codice
+        // Calcoliamo la differenza in minuti tra la data corrente e quella di
+        // generazione del codice
         long minutesBetween = ChronoUnit.MINUTES.between(codeGeneratedAt, LocalDateTime.now());
 
         if (minutesBetween > 10) {
