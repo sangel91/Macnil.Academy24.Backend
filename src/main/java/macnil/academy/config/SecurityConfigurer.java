@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 
 
@@ -20,6 +21,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfigurer {
+    
+
 
     /**
      * There are no plans to remove this support.
@@ -77,4 +80,5 @@ public class SecurityConfigurer {
             return super.authenticationManagerBean();
         }
     }
+    
 }
