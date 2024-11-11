@@ -24,7 +24,7 @@ public class TenantController {
 
 
      @GetMapping
-    public @ResponseBody List<Tenant> getAllPost() {
+    public @ResponseBody List<Tenant> getAllTenants() {
 
         return tenantRepository.findAll();
 

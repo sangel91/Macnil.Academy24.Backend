@@ -2,14 +2,15 @@ package macnil.academy.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import org.springframework.web.server.ResponseStatusException;
 
 import macnil.academy.model.News;
+
 import macnil.academy.repository.NewsRepository;
 
 @Service
@@ -24,22 +25,19 @@ public class NewsService {
     }
 
 
-    public List<News> readAll1(Integer numero, Long tenantId) {
+    public List<News> readAll(Long tenantId) {
         List <News> news;
      
         if (tenantId != null) {
             news = newsRepository.findByTenantId(tenantId);
         } else {
-            // throw  new ResponseStatusException(HttpStatus.NOT_FOUND, "NEWS NON PRESENTI");
-            news = newsRepository.findAll();
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "NEWS NON PRESENTI");
+            
         }
 
-        if (numero == null || numero < 1)
-            return news;
-        else {
-            return news.stream().limit(numero).collect(Collectors.toList());
-        }
+         return news;
 
     }
+  
 
 }

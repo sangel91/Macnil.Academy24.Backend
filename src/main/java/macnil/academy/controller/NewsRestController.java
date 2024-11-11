@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -29,7 +30,7 @@ public class NewsRestController {
 
    
 
-    @GetMapping ("value = /{newsId}")
+    @GetMapping (value = "/{newsId}")
     public News read(@PathVariable ("id") Long id){
          News news = newsService.read(id);
          return news;
@@ -38,12 +39,19 @@ public class NewsRestController {
 
     
 
-    @GetMapping
-    public  List <News> readAll1( Integer numero,@RequestParam( name="tenantId")  Long tenantId ){  //@RequestBody    required = false,
+    @GetMapping("tenants/{tenantId}")
+    public  List <News> readAll( @PathVariable ("tenantId") Long tenantId ){  //@RequestBody  //  required = false,@RequestParam( name="tenantId") 
       
-        List <News> news = newsService.readAll1(numero, tenantId);
+        List <News> news = newsService.readAll(tenantId);
 
         return news;
+
+    }
+
+        @GetMapping
+        public @ResponseBody List<News> getAllNews() {
+
+        return newsRepository.findAll();
 
     }
 
