@@ -1,38 +1,29 @@
 package macnil.academy.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "tenant")
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class Tenant {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id; 
+    @Getter
+    @Setter
+    private Long id;
 
-    @Column(name = "categoria", nullable = true)
+    @Getter
+    @Setter
     private String categoria;
-    
-    public Tenant() {
-    }
-    public Long getId() {
-        return id;
-    }
-    public void setId(Long id) {
-        this.id = id;
-    }
-    public String getCategoria() {
-        return categoria;
-    }
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    } 
-
-    
-    
 }
