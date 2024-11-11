@@ -1,7 +1,7 @@
 package macnil.academy.model;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,8 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "users")
+@Entity  //classe che mappa una tabella nel database
+@Table(name = "users")  //nome della tabella
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,8 +37,8 @@ public class User {
     @Column(name = "workingTime", nullable= false)
     private String workingTime;
 
-    @ManyToOne
-    @JoinColumn(name = "tenant_id")
+    @ManyToOne  //iene utilizzata per definire una relazione molti-a-uno tra due entità
+    @JoinColumn(name = "tenant_id") //specificare la colonna che gestisce la relazione tra le due entità
     private Tenant tenant;
 
 

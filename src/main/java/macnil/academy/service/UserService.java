@@ -12,13 +12,16 @@ public interface UserService {
     /*leggere un singolo user */
     UserDto read(Long id); 
 
-    /*lista dell'email degli user */
-    List<UserDto> read(String email); 
+    /*lista dei nomi degli user */
+    List<UserDto> read(String firstname); 
 
     /*lista degli user con firstname e city */
     List<UserDto> read(String firstname, String city); 
+    
+    //tenant
+    List<User> readAll(Long tenantId);
 
-    List<User> readAll1(Integer numero, Long tenantId);
+    
 
     
 }

@@ -76,5 +76,7 @@ public class SecurityConfigurer {
         public AuthenticationManager authenticationManagerBean() throws Exception {
             return super.authenticationManagerBean();
         }
+        
     }
+    
 }
