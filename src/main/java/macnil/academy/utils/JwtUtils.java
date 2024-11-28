@@ -3,9 +3,7 @@ package macnil.academy.utils;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -30,7 +28,8 @@ public class JwtUtils {
     private Log logger = LogFactory.getLog(JwtUtils.class);
 
     /**
-     * Generates a token by using the user info. 
+     * Generates a token by using the user info.
+     * 
      * @param userInfo
      * @return A string representing the generated token.
      */
@@ -42,6 +41,7 @@ public class JwtUtils {
 
     /**
      * Validates a token by comparing it with the user info
+     * 
      * @param token
      * @param userInfo
      * @return A true or false result representing the outcome of the validation.
@@ -53,6 +53,7 @@ public class JwtUtils {
 
     /**
      * Extracts the identifier of the customer from the token.
+     * 
      * @param token
      * @return A string representing the identifier of the customer.
      */
@@ -60,15 +61,15 @@ public class JwtUtils {
         String customerId = null;
         try {
             customerId = extractClaim(token, Claims::getSubject);
-        }
-        catch(ExpiredJwtException e) {
+        } catch (ExpiredJwtException e) {
             logger.warn("Token expired or not valid!", e);
         }
         return customerId;
     }
 
     /**
-     * Extracts a specific user claim from the authentication token. 
+     * Extracts a specific user claim from the authentication token.
+     * 
      * @param <T>
      * @param token
      * @param claimsResolver
@@ -81,6 +82,7 @@ public class JwtUtils {
 
     /**
      * Extracts all the user claims from the authentication token.
+     * 
      * @param token
      * @return
      */
@@ -97,12 +99,12 @@ public class JwtUtils {
         Date expDate = extractClaim(token, Claims::getExpiration);
         return (new Date()).after(expDate);
     }
-    
+
     private String createToken(Map<String, Object> claims, UserInfo userInfo) {
-        return Jwts.builder().setClaims(claims).setSubject(String.valueOf(userInfo.getId())).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs)) 
+        return Jwts.builder().setClaims(claims).setSubject(String.valueOf(userInfo.getId()))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, SECRET).compact();
     }
     // endregion PRIVATE_METHODS
 }
-

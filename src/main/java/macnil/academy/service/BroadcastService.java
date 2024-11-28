@@ -1,12 +1,9 @@
 package macnil.academy.service;
-
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import macnil.academy.mapper.BroadcastMapper;
 import macnil.academy.model.Broadcast;
 import macnil.academy.repository.BroadcastRepository;
@@ -48,4 +45,5 @@ public class BroadcastService {
             return broadcasts.stream().limit(number).collect(Collectors.toList());
         }
     }
+
 }

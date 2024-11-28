@@ -31,6 +31,11 @@ import macnil.academy.service.BroadcastService;
 @CrossOrigin
 @RestController
 @RequestMapping("/api/v1/broadcasts")
+
+
+
+
+
 public class BroadcastController {
 
     @Autowired
@@ -62,6 +67,8 @@ public class BroadcastController {
         }
         
     }
+
+
 
     @GetMapping
     public ResponseEntity<List<Broadcast>> readAll(@RequestParam(required = false) Integer number){
@@ -157,5 +164,7 @@ public class BroadcastController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Something went wrong: " + e.getMessage(), e);
         }
     }
-    
-}
+ 
+    }
+
+
