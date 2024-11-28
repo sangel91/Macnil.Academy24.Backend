@@ -17,12 +17,11 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Tenant {
 
-    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Setter
-    private  Long id;
+    private Long id;
 
     @Getter
     @Setter

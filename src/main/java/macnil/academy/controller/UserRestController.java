@@ -1,0 +1,80 @@
+package macnil.academy.controller;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
+
+import macnil.academy.controller.dto.UserDto;
+import macnil.academy.model.User;
+import macnil.academy.repository.UserRepository;
+import macnil.academy.service.UserService;
+
+@RestController
+@RequestMapping("/api/v1")
+
+public class UserRestController {
+    @Autowired
+    UserRepository userRepository;
+
+    @Autowired
+    UserService userService;
+
+    @GetMapping("tenant/{tenantId}/users")
+        public @ResponseBody List<UserDto> getAllUsers(@PathVariable Long tenantId) {
+        // 1. Verifica se il tenantId è nullo
+        if (tenantId == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Il tenantId non può essere nullo");
+
+        }
+        // 2. Verifica se il tenantId esiste nel database, ad esempio controllando se
+        // esistono utenti associati a questo tenantId
+        boolean tenantExists = userRepository.existsByTenantId(tenantId);
+        if (!tenantExists) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Tenant non trovato");
+        }
+        // 3. Recupera tutti gli utenti associati al tenantId direttamente
+        List<User> users = userRepository.findByTenantId(tenantId); // Trova tutti gli utenti con il tenantId
+        if (users.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Nessun utente trovato per questo tenant");
+        }
+        // Converti gli utenti in UserDto e restituisci la lista
+        List<UserDto> userDtos = users.stream()
+               .map(user -> {
+                // Crea un nuovo UserDto e mappa i dati dall'oggetto User
+                UserDto userDto = new UserDto();
+                userDto.setId(user.getId());              // Imposta l'ID dell'utente
+                userDto.setFirstname(user.getFirstname());  // Imposta lo username
+                userDto.setCity(user.getCity());
+                userDto.setEmail(user.getEmail());        // Imposta l'email
+                userDto.setRole(user.getRole()); 
+                userDto.setPassword(user.getPassword()); 
+                userDto.setGeneratedCode(user.getGeneratedCode()); 
+                userDto.setDateGeneratedCode(user.getDateGeneratedCode()); 
+                userDto.setCreated_at(user.getCreated_at()); 
+                userDto.setWorkingTime(user.getWorkingTime()); 
+                userDto.setTenant(user.getTenant()); 
+
+
+                return userDto;
+            })
+            .collect(Collectors.toList());
+ 
+     return userDtos;
+ }
+
+    @GetMapping("{id}/users")
+    public @ResponseBody UserDto getUser(@PathVariable("id") Long id) {
+        // return userRepository.findById(id).get();
+        return userService.read(id);
+    }
+
+}
